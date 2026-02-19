@@ -4,20 +4,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 import decision_tree
 
+# DATA SET IRIS
 data = load_iris(as_frame=True)
 X = data.data
 y = data.target
 
+# SEPARAÇÃO DOS DADOS EM TREINO E TESTE
 entrada_treino, entrada_teste, target_treino, target_teste = train_test_split(X, y, test_size=0.2, random_state=23)
 
-# MINHA IMPLEMENTAÇÃO MANUAL
+# RESULTADO DA MINHA IMPLEMENTAÇÃO MANUAL
 tree = decision_tree.Decision_tree()
 tree.create_tree(entrada_treino, target_treino)
 predict = pd.Series([ tree.predict(entrada_teste.iloc[i]) for i in range(len(entrada_teste)) ])
 
 resultado_manual = (predict.values == target_teste.values).sum() / len(target_teste) * 100
 
-# IMPLEMENTAÇÃO DO SCIKIT-LEARN 
+# RESULTADO DA IMPLEMENTAÇÃO DO SCIKIT-LEARN 
 tree = DecisionTreeClassifier()
 tree.fit(entrada_treino, target_treino)
 predict = tree.predict(entrada_teste)
